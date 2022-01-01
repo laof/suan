@@ -1,0 +1,13 @@
+.result {
+  table {
+    margin: auto;
+  }
+
+  ul {
+    max-height: 120px;
+    overflow: auto;
+    border: 1px solid #e0e0e0;
+    padding: 6px;
+    border-radius: 4px;
+  }
+}

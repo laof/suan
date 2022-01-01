@@ -1,0 +1,22 @@
+.header {
+  padding: 25px;
+  margin: 0;
+  font-size: 26px;
+  color: white;
+  text-align: center;
+  background: url(/assets/image/header.png);
+  box-shadow: 1px 0px 2px rgb(0 0 0 / 75%);
+}
+
+.main {
+  width: 690px;
+  padding: 30px 30px 50px 30px;
+  position: relative;
+  background: #fbfbfb;
+  margin: 12px auto;
+  border-radius: 3px;
+  border: 1px solid #cbcbcb;
+  box-shadow: 0px 1px 2px rgb(0 0 0 / 9%),
+    inset 0px 0px 2px 2px rgb(255 255 255 / 50%),
+    inset 0 0 5px 5px rgb(255 255 255 / 40%);
+}

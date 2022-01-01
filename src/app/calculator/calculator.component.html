@@ -1,0 +1,175 @@
+<nz-tabset nzCentered [(nzSelectedIndex)]="tabsetIndex">
+  <nz-tab nzTitle="計算">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="website1" nzRequired
+          >房屋总价</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Please input total!"
+        >
+          <input
+            nz-input
+            id="website1"
+            formControlName="website1"
+            placeholder="万"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
+          >首付</nz-form-label
+        >
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select
+            formControlName="email"
+            id="email"
+            [(ngModel)]="firstPaymentModel"
+          >
+            <nz-option
+              *ngFor="let item of firstPaymentList"
+              [nzValue]="item.value"
+              [nzLabel]="item.label"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="website1" nzRequired
+          >贷款</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Please input total!"
+        >
+          120万
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired
+          >利率</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          [nzValidateStatus]="validateForm.controls['phoneNumber']"
+          nzErrorTip="Please input rate"
+        >
+          <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+            <ng-template #addOnBeforeTemplate>
+              <nz-select
+                [(ngModel)]="rateModel"
+                formControlName="phoneNumberPrefix"
+                class="phone-select"
+              >
+                <nz-option
+                  *ngFor="let item of rateList"
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                ></nz-option>
+              </nz-select>
+            </ng-template>
+            <input
+              formControlName="phoneNumber"
+              placeholder="%"
+              id="'phoneNumber'"
+              nz-input
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="year"
+          >贷款年限</nz-form-label
+        >
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="year" id="year" [(ngModel)]="yearModel">
+            <nz-option
+              *ngFor="let item of yearList"
+              [nzValue]="item.value"
+              [nzLabel]="item.label"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type"
+          >还款方式</nz-form-label
+        >
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group
+            formControlName="type"
+            id="type"
+            [(ngModel)]="typeModel"
+            nzName="radiogroup"
+          >
+            <label nz-radio nzValue="A">等额本息</label>
+            <label nz-radio nzValue="B">等额本金</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">计算</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-tab>
+  <nz-tab nzTitle="結果">
+    <div class="result">
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="12">
+          <nz-statistic
+            [nzValue]="(1949101 | number)!"
+            nzTitle="房款总额"
+          ></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-statistic
+            [nzValue]="(2019.111 | number: '1.0-2')!"
+            nzTitle="贷款总额"
+          ></nz-statistic>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="12">
+          <nz-statistic
+            [nzValue]="(1949101 | number)!"
+            nzTitle="还款总额"
+          ></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-statistic
+            [nzValue]="(2019.111 | number: '1.0-2')!"
+            nzTitle="支付利息款"
+          ></nz-statistic>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="12">
+          <nz-statistic
+            [nzValue]="(1949101 | number)!"
+            nzTitle="首期付款"
+          ></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-statistic
+            [nzValue]="(2019.111 | number: '1.0-2')!"
+            nzTitle="月均还款"
+          ></nz-statistic>
+        </nz-col>
+      </nz-row>
+      <ul>
+        <li *ngFor="let item of resultList">第一期 3232</li>
+        <li>第一期 3232</li>
+        <li>第一期 3232</li>
+        <li>第一期 3232</li>
+        <li>第一期 3232</li>
+      </ul>
+    </div>
+  </nz-tab>
+  <nz-tab nzTitle="幫助">version 1.0.1</nz-tab>
+</nz-tabset>
