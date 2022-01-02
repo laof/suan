@@ -3,3 +3,13 @@
 body {
   background: url(assets/image/bg.png);
 }
+
+.header {
+  padding: 25px;
+  margin: 0;
+  font-size: 26px;
+  color: white;
+  text-align: center;
+  background: url(assets/image/header.png);
+  box-shadow: 1px 0px 2px rgb(0 0 0 / 75%);
+}
