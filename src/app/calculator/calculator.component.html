@@ -1,32 +1,35 @@
 <nz-tabset nzCentered [(nzSelectedIndex)]="tabsetIndex">
-  <nz-tab nzTitle="計算">
+  <nz-tab nzTitle="計算" nzDisabled="true">
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="website1" nzRequired
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="total" nzRequired
           >房屋总价</nz-form-label
         >
         <nz-form-control
           [nzSm]="14"
           [nzXs]="24"
-          nzErrorTip="Please input total!"
+          nzErrorTip="Please input total !"
         >
           <input
+            (ngModelChange)="updateBorrowTotal()"
             nz-input
-            id="website1"
-            formControlName="website1"
+            id="total"
+            autocomplete="off"
+            formControlName="total"
             placeholder="万"
           />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="firstPayment"
           >首付</nz-form-label
         >
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <nz-select
-            formControlName="email"
-            id="email"
+            formControlName="firstPayment"
+            id="firstPayment"
             [(ngModel)]="firstPaymentModel"
+            (ngModelChange)="updateBorrowTotal()"
           >
             <nz-option
               *ngFor="let item of firstPaymentList"
@@ -37,34 +40,22 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="website1" nzRequired
-          >贷款</nz-form-label
-        >
-        <nz-form-control
-          [nzSm]="14"
-          [nzXs]="24"
-          nzErrorTip="Please input total!"
-        >
-          120万
+        <nz-form-label [nzSm]="6" [nzXs]="24">贷款</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <span class="borrow-total">{{ borrowTotal }}</span
+          >万
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired
-          >利率</nz-form-label
-        >
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>利率</nz-form-label>
         <nz-form-control
+          nzErrorTip="Please input rate !"
           [nzSm]="14"
           [nzXs]="24"
-          [nzValidateStatus]="validateForm.controls['phoneNumber']"
-          nzErrorTip="Please input rate"
         >
           <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
             <ng-template #addOnBeforeTemplate>
-              <nz-select
-                [(ngModel)]="rateModel"
-                formControlName="phoneNumberPrefix"
-                class="phone-select"
-              >
+              <nz-select [(ngModel)]="rateModel" formControlName="rateType">
                 <nz-option
                   *ngFor="let item of rateList"
                   [nzLabel]="item.label"
@@ -73,20 +64,21 @@
               </nz-select>
             </ng-template>
             <input
-              formControlName="phoneNumber"
+              autocomplete="off"
+              formControlName="rate"
               placeholder="%"
-              id="'phoneNumber'"
+              id="rate"
               nz-input
             />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="year"
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="time"
           >贷款年限</nz-form-label
         >
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select formControlName="year" id="year" [(ngModel)]="yearModel">
+          <nz-select formControlName="time" id="time" [(ngModel)]="yearModel">
             <nz-option
               *ngFor="let item of yearList"
               [nzValue]="item.value"
@@ -96,13 +88,13 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type"
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="return"
           >还款方式</nz-form-label
         >
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <nz-radio-group
-            formControlName="type"
-            id="type"
+            formControlName="return"
+            id="return"
             [(ngModel)]="typeModel"
             nzName="radiogroup"
           >
@@ -118,58 +110,84 @@
       </nz-form-item>
     </form>
   </nz-tab>
-  <nz-tab nzTitle="結果">
+  <nz-tab nzTitle="結果" nzDisabled="true">
     <div class="result">
-      <nz-row [nzGutter]="16">
-        <nz-col [nzSpan]="12">
-          <nz-statistic
-            [nzValue]="(1949101 | number)!"
-            nzTitle="房款总额"
-          ></nz-statistic>
-        </nz-col>
-        <nz-col [nzSpan]="12">
-          <nz-statistic
-            [nzValue]="(2019.111 | number: '1.0-2')!"
-            nzTitle="贷款总额"
-          ></nz-statistic>
-        </nz-col>
-      </nz-row>
-      <nz-row [nzGutter]="16">
-        <nz-col [nzSpan]="12">
-          <nz-statistic
-            [nzValue]="(1949101 | number)!"
-            nzTitle="还款总额"
-          ></nz-statistic>
-        </nz-col>
-        <nz-col [nzSpan]="12">
-          <nz-statistic
-            [nzValue]="(2019.111 | number: '1.0-2')!"
-            nzTitle="支付利息款"
-          ></nz-statistic>
-        </nz-col>
-      </nz-row>
-      <nz-row [nzGutter]="16">
-        <nz-col [nzSpan]="12">
-          <nz-statistic
-            [nzValue]="(1949101 | number)!"
-            nzTitle="首期付款"
-          ></nz-statistic>
-        </nz-col>
-        <nz-col [nzSpan]="12">
-          <nz-statistic
-            [nzValue]="(2019.111 | number: '1.0-2')!"
-            nzTitle="月均还款"
-          ></nz-statistic>
-        </nz-col>
-      </nz-row>
-      <ul>
-        <li *ngFor="let item of resultList">第一期 3232</li>
-        <li>第一期 3232</li>
-        <li>第一期 3232</li>
-        <li>第一期 3232</li>
-        <li>第一期 3232</li>
-      </ul>
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="back()">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24">贷款总额 (万)</nz-form-label>
+          <nz-form-control
+            [nzSm]="12"
+            [nzXs]="24"
+            nzErrorTip="Please input total!"
+          >
+            <input
+              nz-input
+              disabled
+              [value]="borrowTotal | number"
+              type="text"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24">还款总额 (万)</nz-form-label>
+          <nz-form-control
+            [nzSm]="12"
+            [nzXs]="24"
+            nzErrorTip="Please input total!"
+          >
+            <input
+              nz-input
+              disabled
+              [value]="data.total | number"
+              type="text"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label disabled [nzSm]="6" [nzXs]="24"
+            >支付利息总额 (万)</nz-form-label
+          >
+          <nz-form-control
+            [nzSm]="12"
+            [nzXs]="24"
+            nzErrorTip="Please input total!"
+          >
+            <input
+              nz-input
+              disabled
+              [value]="data.interest | number"
+              type="text"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24">月均还款</nz-form-label>
+          <nz-form-control
+            [nzSm]="12"
+            [nzXs]="24"
+            nzErrorTip="Please input total!"
+          >
+            <input
+              *ngIf="month(); else listRef"
+              nz-input
+              disabled
+              [value]="data.months | number"
+              type="text"
+            />
+
+            <ng-template #listRef>
+              <ul>
+                <li *ngFor="let item of monthsList">{{item}}</li>
+              </ul>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row class="register-area">
+          <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button nz-button nzType="primary">返回</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
     </div>
   </nz-tab>
-  <nz-tab nzTitle="幫助">version 1.0.1</nz-tab>
 </nz-tabset>

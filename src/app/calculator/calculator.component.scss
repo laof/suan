@@ -4,10 +4,28 @@
   }
 
   ul {
+    margin: 0;
+    padding: 0;
     max-height: 120px;
     overflow: auto;
-    border: 1px solid #e0e0e0;
-    padding: 6px;
-    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+
+    li {
+      padding: 0 4px;
+    }
+
+    li:hover {
+      color: rgb(108, 163, 245);
+    }
   }
+
+  input {
+    background: transparent;
+    color: #0c0c0c;
+  }
+}
+
+.borrow-total {
+  color: #f57d16;
 }
