@@ -86,14 +86,12 @@ export class CalculatorComponent implements OnInit {
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
+      // console.log('submit', this.validateForm.value);
       const time = this.validateForm.value.time;
       const interest =
         this.borrowTotal * (this.validateForm.value.rate / 100) * time;
       this.data.total = interest + this.borrowTotal;
       this.data.interest = interest;
-      // @ts-ignore
-
       if (this.validateForm.value.return === 'A') {
         this.data.months = (this.data.total / (12 * time)) * 10000;
       } else {
